@@ -1,1 +1,19 @@
+.vscode
 node_modules
+.env
+dist
+.DS_Store
+.env.local
+.env.*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+coverage
+.idea
+.vs
+*.log
+*.tsbuildinfo
+--- IGNORE ---
+.env
+env
