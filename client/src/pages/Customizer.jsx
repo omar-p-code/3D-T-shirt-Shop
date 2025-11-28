@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/immutability */
 import React, { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useSnapshot } from 'valtio'
@@ -76,7 +75,20 @@ export default function Customizer() {
       if (!prompt) return alert("Please enter a prompt");
 
       try {
-         // call our backend to generate an ai image
+         setGeneratingImg(true);
+         const response = await fetch('http://localhost:8080/api/v1/dalle', {
+            method: 'POST',
+            headers: {
+               'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+               prompt,
+            }),
+         });
+
+         const data = await response.json();
+         console.log(data);
+         handleDecals(type, data.photo);
       } catch (error) {
          alert("Something went wrong");
       } finally {
@@ -152,6 +164,14 @@ export default function Customizer() {
                         handleClick={() => handleActiveFilterTab(tab.name)}
                      />
                   ))}
+
+                  <button className='download-btn w-fit p-3'>
+                     <img
+                        src={download}
+                        alt="download-img"
+                        onClick={downloadCanvasToImage}
+                     />
+                  </button>
                </motion.div>
             </>
          )}
