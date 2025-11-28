@@ -13,9 +13,18 @@ export const downloadCanvasToImage = () => {
 export const reader = (file) =>
   new Promise((resolve, reject) => {
     const fileReader = new FileReader();
-    fileReader.onload = () => resolve(fileReader.result);
+
+    fileReader.onload = () => {
+      resolve(fileReader.result);
+    };
+
+    fileReader.onerror = (err) => {
+      reject(err);
+    };
+
     fileReader.readAsDataURL(file);
   });
+
 
 export const getContrastingColor = (color) => {
   // Remove the '#' character if it exists
